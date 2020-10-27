@@ -1,14 +1,26 @@
-# First Visualization and Analysis in GEE
-In this tutorial, you'll learn how to generate an animated GIF representing 20-year median NDVI for serial 16-day MODIS composites spanning January 1st through December 31st. The tutorial uses [MODIS](https://modis.gsfc.nasa.gov/), a moderate resolution satellite, and [NDVI](https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index), which is a common reflectance-based vegetation index. The [Earth Engine Data Catalog](https://developers.google.com/earth-engine/datasets/) provides NDVI as a precalculated [dataset](https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MOD13A2) for convenience.
+# Mexico:  20-year median NDVI animation
 
-## Instructions
+In this repo, a script is created to create an animated GIF of Mexico that displays the 20-year median NDVI over a 1-year time span.  The NDVI, Normalized Difference Vegetation Index, is a reflectance-based vegetation index that is calculated using Near-Infrared and Red bands.  Because healthy vegetation has high reflectance in the Near Infared band, which is not visible with the human eye, this normalized difference ratio highlight vegetation productivity.  Google Earth Engine (GEE) is the software used to import the NDVI values over this 20 year timespan and excecute the code.  The dataset used in this code is the MODIS Satellite Terra Vegetation Indicies 16-day Global 1 km dataset where NDVI is precalculated.
 
-Follow the [MODIS NDVI Times Series Animation tutorial on the GEE community web site](https://developers.google.com/earth-engine/tutorials/community/modis-ndvi-time-series-animation#2_define_clipping_and_region_boundary_geometries) or the GEE [Github repository of the same tutorial](https://github.com/google/earthengine-community/blob/master/tutorials/modis-ndvi-time-series-animation/index.md). That tutorial will walk you through your first NDVI visualization!
+## The Code
 
-# Coding Challenge
-Once you've completed the NDVI tutorial, write a script for GEE that will create the same output (an animated .gif) for a specific country. Choose any country you like. Once completed, copy the code from your GEE file into a `.js` file and place it in a new Github repo. Place your animated `.gif` in the same repo and embed it in your `README`. You will submit a link to your repo containing the code, your animated gif, and a brief write-up in your `README` about the country you selected and any observations you have. Your output should look something like this (I chose Kenya):
-> ![NDVI Animation of Kenya](images/Mexico_20yr_medNDVI.gif)
+The script, MODIS_20yrNDVI_gif.js, is a javascript code that can be imported into GEE to create the animated output.  The following are the steps within this code:
 
-## What are these animations showing, exactly?  
-NDVI is mapped to a color gradient from tan to dark green representing low to high photosynthetic capacity (low to high vegetation cover density/productivity). The tide-like latitudinal shift in vegetation is associated with the sun’s declination moving between 23.5&deg; north and 23.5&deg; south, relative to the equator, throughout the year. See [Nicholson, 2019](https://journals.ametsoc.org/doi/full/10.1175/BAMS-D-16-0287.1) for more information on this phenomenon. Similar seasonal patterns of vegetation productivity are found around the world at both small and large scales.
+1.  The NDVI band is selected from the MODIS Terra Vegetation Indicies 16-day Global 1 km dataset.
+2.  A mask variable is assigned to the Mexico country border using Large Scale International Boundary dataset which contains country boundaries and a region is imported for the extent of the animation frame.
+3.  The images within our NDVI image collection are grouped by the Day of Year in which the image was collected and lists of NDVI images are created for each day of the year over 365 days.
+4.  Within each of these Day of Year groups, the median NDVI is calculated across all pixels as to have 365 median NDVI raster.
+5.  Vizualization parameters are created to best display NDVI and each Day of Year median NDVI is mapped to these parameters and clipping the extent to the Mexico boundary mask.
+6.  The .gif parameters are set using the region defined earlier as the extent, with appropriate dimensions and coordinate system, and the desired frames per second in our animation.
+7.  Lastly, the .gif is exported to the GEE console using the defined .gif parameters. 
+
+# Output Animation
+
+The output of this script is below which shows the median NDVI for a 20 year timespan for each day of the year:
+
+> ![NDVI Animation of Mexico](images/Mexico_20yr_medNDVI.gif)
+
+## Observations  
+
+I chose Mexico for this exercise because of the country's large geographic extent and diversity of vegetation and climates.  I found it interesting that the peak median NDVI differs depending on the area of the country in which one is examining.  When looking at the latitude that stretches from southern Baja Peninsula across the mainland, there are three different peaks.  The first occurs on the eastern Gulf coast, followed by the central mainland, and lastly on the peninsula.
 
