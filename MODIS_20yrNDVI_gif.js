@@ -1,7 +1,7 @@
 // Author:  Mitchell Lazarz
 // Created in javascript using Google Earth Engine
 // Creation Date:  26 October 2020
-// Description:  This code uses NDVI from the Modis satellite to create a .gif displaying the 20 year median NDVI over a year for Mexico.
+// Description:  This code uses NDVI from the Modis satellite to create a .gif displaying the 20 year median NDVI over a 1-year period for Mexico in Google Earth Engine.
 
 
 // NDVI band is selected from MODIS Terra Vegetation Indicies 16-day Global 1km dataset
